@@ -11,10 +11,12 @@ go
 Create table Account(
 	UserName varchar(50) not null primary key,
 	PassWord_ varchar(50) not null,
+	PhanQuyen bit not null,
 )
 go
 insert into Account  values
-('abc','abc');
+('admin','admin',1),
+('user','user',0);
 go
 create table CanBo(
 	MaCanBo varchar(10) Primary key,
@@ -26,5 +28,9 @@ create table CanBo(
 	ThuocTinh nvarchar(100) not null,
 )
 insert into CanBo values
-('001',N'ABC','10/02/2001',1,N'Ha Noi','Công Nhân','15');
+('001',N'ABC','10/02/2001',1,N'Hà Nội',N'Công Nhân',N'15'),
+('002',N'ABC','1/12/2001',1,N'Sài Gòn',N'Kỹ Sư',N'CNTT'),
+('003',N'Lê Văn A','05/05/2001',0,N'Đà Nẵng',N'Nhân Viên',N'CNTT');
 select * from CanBo
+delete from CanBo where MaCanBo=''
+update CanBo set ChucVu = N'Nhân Viên' where MaCanBo = '005'

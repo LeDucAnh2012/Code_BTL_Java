@@ -10,12 +10,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Label;
-import java.awt.Rectangle;
 import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
 /**
  *
  * @author ducan
@@ -25,9 +30,6 @@ public class BTL_Nhom_1_De1_AWT implements ActionListener{
     /**
      * @param args the command line arguments
      */
-    static TextField txtUsername =new TextField();
-    static Button btnLogin =new Button("Login");
-    
     public static void main(String[] args) {
         // TODO code application logic here
        // Tao Frame
@@ -60,17 +62,30 @@ public class BTL_Nhom_1_De1_AWT implements ActionListener{
         labUsername.setBounds(80, 100, 100, 30);
         labPassword.setBounds(80, 150, 100, 30);
         
-        
+        TextField txtUsername =new TextField();
         txtUsername.setBounds(190, 100, 200, 30);
         
         TextField txtPassword =new TextField();
         txtPassword.setBounds(190, 150, 200, 30);
         
+        JRadioButton radioBtnAdmin = new JRadioButton("Admin");
+        JRadioButton radioBtnUser = new JRadioButton("User");
+        radioBtnAdmin.setBounds(150, 200, 70, 30);
+        radioBtnUser.setBounds(280, 200, 70, 30);
+ 
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(radioBtnAdmin);
+        bg.add(radioBtnUser);
+ 
+        Login.add(radioBtnAdmin);
+        Login.add(radioBtnUser); 
         
-        btnLogin.setBounds(100, 200, 70, 30);
+        Button btnLogin =new Button("Login");
+        btnLogin.setBounds(100, 250 ,70, 30);
         
         Button btnExit=new Button("Exit");
-        btnExit.setBounds(280, 200, 70, 30);
+        btnExit.setBounds(280, 250, 70, 30);
+        
         
         Login.add(labLogin);        
         Login.add(labUsername);
@@ -79,37 +94,60 @@ public class BTL_Nhom_1_De1_AWT implements ActionListener{
         Login.add(txtPassword);
         Login.add(btnLogin);
         Login.add(btnExit);
+
         
         btnLogin.setActionCommand("login");
-        btnLogin.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                String x= txtUsername.getText();
-                if(x.equals("abc")){
-                    btnLogin.setLabel(x);
+        btnLogin.addActionListener((ActionEvent e) -> {
+            try {
+                DAO dao = new DAO();
+                ResultSet rs = dao.GetDataTableLogin();
+                
+                    String userName = txtUsername.getText();
+                    String password = txtPassword.getText();
+                    int PK = 0;
+                    if(radioBtnUser.isSelected()){
+                        PK = 0;
+                    } else
+                    if(radioBtnAdmin.isSelected()){
+                        PK = 1;
+                    }
+                while (rs.next()){
+                    
+                    if( userName.equals(rs.getString("UserName")) && password.equals(rs.getString("PassWord_")) 
+                            && Integer.parseInt(rs.getString("PhanQuyen")) == PK && PK == 1){
+                       
+                           fAdmin.main(args);
+                           break;
+                       }
+                   else    
+                     if( userName.equals(rs.getString("UserName")) && password.equals(rs.getString("PassWord_")) 
+                            && Integer.parseInt(rs.getString("PhanQuyen")) == PK && PK == 0){
+                       
+                           fUser.main(args);
+                           break;
+                       }
                 }
- 
+            } catch (SQLException ex) {
+                Logger.getLogger(BTL_Nhom_1_De1_AWT.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         
         btnExit.setActionCommand("exit");
-        btnExit.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                btnExit.setLabel("Chieens");
- 
-            }
+        btnExit.addActionListener((ActionEvent arg0) -> {
+            System.exit(0);
         });
-        
+        Login.addWindowListener(new WindowAdapter(){  
+            public void windowClosing(WindowEvent e) {  
+                Login.dispose();  
+            }  
+        });  
     
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        if("login".equals(e.getActionCommand())){
-            
-        }
+
     }
     
 }
