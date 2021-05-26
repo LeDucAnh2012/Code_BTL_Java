@@ -312,7 +312,7 @@ public class fAdmin {
                         if(dao.InsertCongNhan(cn)){
                             JOptionPane.showMessageDialog(null, "Insert Successfully!");
                         }
-                        else JOptionPane.showMessageDialog(null, "Insert failed!");
+                        else JOptionPane.showMessageDialog(null, "Insert failed!\nXem lại dữ liệu");
                     }
                 case "Kỹ Sư" ->                     {
                         txtThuocTinh.setName("Ngành Đào Tạo");
@@ -332,7 +332,7 @@ public class fAdmin {
                         if(dao.InsertKySu(ks)){
                             JOptionPane.showMessageDialog(null, "Insert Successfully!");
                         }
-                        else JOptionPane.showMessageDialog(null, "Insert failed!");
+                        else JOptionPane.showMessageDialog(null, "Insert failed!\nXem lại dữ liệu");
                     }
                 case "Nhân Viên" ->                     {
                         txtThuocTinh.setName("Công Việc");
@@ -352,7 +352,7 @@ public class fAdmin {
                         if(dao.InsertNhanVien(nv)){
                             JOptionPane.showMessageDialog(null, "Insert Successfully!");
                         }
-                        else JOptionPane.showMessageDialog(null, "Insert failed!");
+                        else JOptionPane.showMessageDialog(null, "Insert failed!\nXem lại dữ liệu");
                     }
                 default -> JOptionPane.showMessageDialog(null, "Hãy Chọn Chức Vụ");
             }
