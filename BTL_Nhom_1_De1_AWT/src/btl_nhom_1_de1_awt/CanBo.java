@@ -26,7 +26,6 @@ public class CanBo {
         this.GioiTinh = GioiTinh;
         this.DiaChi = DiaChi;
         this.ChucVu = ChucVu;
-        
     }
 
     CanBo() {

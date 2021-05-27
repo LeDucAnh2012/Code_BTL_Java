@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package btl_nhom_1_de1_awt;
-import com.sun.jdi.connect.spi.Connection;
-
 import java.sql.*;
 /**
  *

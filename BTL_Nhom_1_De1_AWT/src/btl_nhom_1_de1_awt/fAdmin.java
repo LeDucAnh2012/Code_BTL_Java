@@ -16,6 +16,7 @@ import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.Panel;
+import java.awt.PopupMenu;
 import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.Toolkit;
@@ -23,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Date;
@@ -123,6 +126,27 @@ public class fAdmin {
         mFile.addActionListener((ActionEvent arg0) -> {
             fUser.about();
         });
+        
+        //popupMenu
+        
+        PopupMenu popupMenu = new PopupMenu("Edit");
+        
+        MenuItem exit = new MenuItem("Exit");
+        exit.setActionCommand("Exit");
+        
+        popupMenu.add(exit);
+        Admin.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                if(e.getButton() == e.BUTTON3)
+                popupMenu.show(Admin, e.getX(), e.getY());
+            }
+        });
+        exit.addActionListener((ActionEvent e)->{
+            Admin.dispose();
+        });
+        
+        Admin.add(popupMenu);
 }
    
     static void tbAdd(){
@@ -245,18 +269,54 @@ public class fAdmin {
         
         toolbarAdd.add(btnSave);
         toolbarAdd.add(btnCancel);
+        
+        //PopupMenu
+        PopupMenu popupMenu = new PopupMenu("Edit");
+        
+        MenuItem clear = new MenuItem("Clear ALL Text");
+        clear.setActionCommand("Clear");
+        
+        MenuItem exit = new MenuItem("Exit");
+        exit.setActionCommand("Exit");
+        
+        popupMenu.add(clear);
+        popupMenu.add(exit);
+        
+        toolbarAdd.add(popupMenu);
+        
+        toolbarAdd.addMouseListener(new MouseAdapter(){
+              @Override
+            public void mouseClicked(MouseEvent e){
+                if(e.getButton() == e.BUTTON3)
+                popupMenu.show(toolbarAdd,e.getX(),e.getY());
+            }
+        });
+        
+        clear.addActionListener((ActionEvent e)->{
+            txtHoTen.setText("");
+            txtNamSinh.setText("");
+            txtDiaChi.setText("");
+            txtThuocTinh.setText("");
+            txtMaCanBo.setText("");
+            
+        });
+        exit.addActionListener((ActionEvent e)->{
+            toolbarAdd.dispose();
+        });
+        
+        
         //code chức năng: 
         //chuc nang them can bo
-          choice_ChucVu.addItemListener((ItemEvent e) -> {
-              if("Nhân Viên".equals(choice_ChucVu.getSelectedItem())){
-                 ThuocTinh.setText("Bậc Lương");
-              }
-              else if("Kỹ Sư".equals(choice_ChucVu.getSelectedItem())){
-                 ThuocTinh.setText("Ngành ĐT");
-              }
-              else if("Công Nhân".equals(choice_ChucVu.getSelectedItem())){
-                 ThuocTinh.setText("Công Việc");
-              }
+        choice_ChucVu.addItemListener((ItemEvent e) -> {
+              if(null != choice_ChucVu.getSelectedItem())
+                switch (choice_ChucVu.getSelectedItem()) {
+                    case "Nhân Viên" -> ThuocTinh.setText("Công Việc");
+                    case "Kỹ Sư" -> ThuocTinh.setText("Ngành ĐT");
+                    case "Công Nhân" -> ThuocTinh.setText("Bậc Lương");
+                    default -> {
+                        ThuocTinh.setText("Thuộc Tính");
+                    }
+                }
         });  
         btnSave.addActionListener((ActionEvent arg0) -> {
             
@@ -411,6 +471,34 @@ public class fAdmin {
         f_tb_Search.add(btnTimKiem);
         f_tb_Search.add(txaTTCanBo);
 
+         //PopupMenu
+        PopupMenu popupMenu = new PopupMenu("Edit");
+        
+        MenuItem clear = new MenuItem("Clear ALL Text");
+        clear.setActionCommand("Clear");
+        
+        MenuItem exit = new MenuItem("Exit");
+        exit.setActionCommand("Exit");
+        
+        popupMenu.add(clear);
+        popupMenu.add(exit);
+        
+        f_tb_Search.add(popupMenu);
+        
+        f_tb_Search.addMouseListener(new MouseAdapter(){
+              @Override
+            public void mouseClicked(MouseEvent e){
+                if(e.getButton() == e.BUTTON3)
+                popupMenu.show(f_tb_Search,e.getX(),e.getY());
+            }
+        });
+        clear.addActionListener((ActionEvent e)->{
+            txtTimKiem.setText("");
+            txaTTCanBo.setText("");
+        });
+        exit.addActionListener((ActionEvent e)->{
+            f_tb_Search.dispose();
+        });
         btnTimKiem.setActionCommand("Tim Kiem");
         btnTimKiem.addActionListener((ActionEvent e) -> {
               try {
@@ -500,6 +588,33 @@ public class fAdmin {
         toolbarView.add(title_tbView);
         toolbarView.add(txaCanBo);
         toolbarView.add(btnReload);
+        
+        PopupMenu popupMenu = new PopupMenu("Edit");
+        
+        MenuItem clear = new MenuItem("Clear ALL Text");
+        clear.setActionCommand("Clear");
+        
+        MenuItem exit = new MenuItem("Exit");
+        exit.setActionCommand("Exit");
+        
+        popupMenu.add(clear);
+        popupMenu.add(exit);
+        
+        toolbarView.add(popupMenu);
+        
+        toolbarView.addMouseListener(new MouseAdapter(){
+              @Override
+            public void mouseClicked(MouseEvent e){
+                if(e.getButton() == e.BUTTON3)
+                popupMenu.show(toolbarView,e.getX(),e.getY());
+            }
+        });
+        clear.addActionListener((ActionEvent e)->{
+            txaCanBo.setText("");
+        });
+        exit.addActionListener((ActionEvent e)->{
+            toolbarView.dispose();
+        });
         
         toolbarView.addWindowListener(new WindowAdapter(){  
             @Override

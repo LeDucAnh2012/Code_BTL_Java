@@ -1,0 +1,6 @@
+File Tài khoản
+TK: admin
+MK: admin
+
+TK: user
+MK: user

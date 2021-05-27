@@ -6,11 +6,7 @@
 package btl_nhom_1_de1_awt;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import java.sql.*;
-import java.util.Collection;
-import javax.management.Query;
 
 /**
  *
@@ -33,16 +29,16 @@ public class DBConnection {
         ds.setDatabaseName(db);
         ds.setServerName(url);
         ds.setPortNumber(port);
-        
-
     }
+    
     public Connection GetConn(){
         try{
              conn = ds.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
+             return conn;
+        }catch (SQLException e) {
+            
         }
-        return conn;
+           return conn;
     }
     public ResultSet GetData(String query){
         conn = GetConn();
