@@ -502,15 +502,18 @@ public class fAdmin {
         btnTimKiem.setActionCommand("Tim Kiem");
         btnTimKiem.addActionListener((ActionEvent e) -> {
               try {
-                 
                  DAO dao = new DAO();
                   ResultSet rs = dao.GetDataUser(txtTimKiem.getText());
                   String result =  String.format("%-20s%-20s%-20s%-20s%-20s%-20s%-20s","Mã Cán Bộ","Tên Cán Bộ","Năm Sinh","Giới Tính","Địa Chỉ","Chức Vụ","Thuộc Tính");
                   txaTTCanBo.setText(result + "\n");
+                  if(!rs.next()){
+                      JOptionPane.showMessageDialog(null,"Không tìm thấy thông tin");
+                      return ;
+                  
+                  }
                   while (rs.next()){
                      switch (rs.getString("ChucVu")) {
                          case "Nhân Viên" -> {
-                             
                              NhanVien nv = new NhanVien();
                              nv.MaCanBo = rs.getString("MaCanBo");
                              nv.TenCanBo = rs.getString("TenCanBo");
